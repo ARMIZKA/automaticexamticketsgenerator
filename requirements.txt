@@ -1,0 +1,5 @@
+python-docx
+jinja2
+scikit-learn
+openai==0.28.0
+requests
