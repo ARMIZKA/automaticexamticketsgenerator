@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Регистрация по приглашению</title>
+  <style>
+    body { background: #f3f8ff; font-family: Arial; }
+    .regbox { max-width: 400px; margin: 60px auto; background: #fff; border-radius: 10px; box-shadow: 0 4px 16px 0 #a6bcd4; padding: 36px 30px; }
+    h1 { text-align: center; color: #315d8a; margin-bottom: 18px; }
+    label { color: #37597b; font-weight: 600; margin-bottom: 6px; display: block; }
+    input { width: 100%; padding: 9px; margin-bottom: 17px; border-radius: 5px; border: 1.2px solid #b3c9ea; background: #f9fbfe; }
+    button { width: 100%; background: #4682b4; color: white; border: none; border-radius: 6px; font-size: 1.08em; padding: 10px; font-weight: 600; cursor: pointer; }
+    button:hover { background: #315d8a; }
+    .errorlist { color: #c00; list-style-type: none; margin-bottom: 12px; }
+    .msg { color: #3a7c29; text-align: center; font-size: 1.1em; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <div class="regbox">
+    <h1>Регистрация по приглашению</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Зарегистрироваться</button>
+    </form>
+  </div>
+</body>
+</html>

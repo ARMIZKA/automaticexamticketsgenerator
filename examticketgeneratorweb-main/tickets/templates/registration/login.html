@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Вход</title>
+  <style>
+    body { background: #f8faff; font-family: Arial; }
+    .login-container { max-width: 350px; margin: 60px auto; background: #fff; padding: 36px 30px 24px 30px; border-radius: 12px; box-shadow: 0 2px 12px #bfd6f6; }
+    h2 { text-align: center; color: #246; margin-bottom: 24px;}
+    input[type=text], input[type=password] { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #c9d8ea; margin-bottom: 18px; }
+    button { width: 100%; background: #2a5aad; color: #fff; border: none; border-radius: 6px; padding: 10px; font-size: 1.1em; }
+    button:hover { background: #244d90; }
+    .error { color: #d33; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Вход</h2>
+    {% if form.errors %}
+      <div class="error">Неверный логин или пароль</div>
+    {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Войти</button>
+    </form>
+    <p style="text-align:center;margin-top:10px;font-size:0.96em;">
+      Нет аккаунта? <a href="/invite/register/">Регистрация по приглашению</a>
+    </p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <h1>Генератор экзаменационных билетов</h1>
+
+  {# Сообщение об ошибке (например, невалидная форма или эксепшен в view) #}
+  {% if error_message %}
+    <div class="error-block">{{ error_message }}</div>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label>Источник генерации билетов:</label>
+      <div class="radio-row">
+        {% for value, label in form.gen_source.field.choices %}
+          <label>
+            <input type="radio" name="{{ form.gen_source.name }}" value="{{ value }}"
+                   {% if form.gen_source.value == value %}checked{% endif %}>
+            {{ label }}
+          </label>
+        {% endfor %}
+      </div>
+      {% if form.gen_source.errors %}
+        <div class="field-error">{{ form.gen_source.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.file.id_for_label }}">{{ form.file.label }}</label>
+      {{ form.file }}
+      {% if form.file.errors %}
+        <div class="field-error">{{ form.file.errors }}</div>
+      {% endif %}
+      <span class="note">DOCX-файл: список вопросов <b>или</b> конспект лекции (выберите нужный источник выше)</span>
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.direction.id_for_label }}">{{ form.direction.label }}</label>
+      {{ form.direction }}
+      {% if form.direction.errors %}
+        <div class="field-error">{{ form.direction.errors }}</div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.profile.id_for_label }}">{{ form.profile.label }}</label>
+      {{ form.profile }}
+      {% if form.profile.errors %}
+        <div class="field-error">{{ form.profile.errors }}</div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.department.id_for_label }}">{{ form.department.label }}</label>
+      {{ form.department }}
+      {% if form.department.errors %}
+        <div class="field-error">{{ form.department.errors }}</div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.discipline.id_for_label }}">{{ form.discipline.label }}</label>
+      {{ form.discipline }}
+      {% if form.discipline.errors %}
+        <div class="field-error">{{ form.discipline.errors }}</div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.num_tickets.id_for_label }}">{{ form.num_tickets.label }}</label>
+      {{ form.num_tickets }}
+      {% if form.num_tickets.errors %}
+        <div class="field-error">{{ form.num_tickets.errors }}</div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label>Формат:</label>
+      <div class="radio-row">
+        {% for value, label in form.format.field.choices %}
+          <label>
+            <input type="radio" name="{{ form.format.name }}" value="{{ value }}"
+                   {% if form.format.value == value %}checked{% endif %}>
+            {{ label }}
+          </label>
+        {% endfor %}
+      </div>
+      {% if form.format.errors %}
+        <div class="field-error">{{ form.format.errors }}</div>
+      {% endif %}
+    </div>
+    <button type="submit">Сгенерировать билеты</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  .container {
+    max-width: 520px;
+    margin: 48px auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px 0 rgba(0,60,150,0.09), 0 1.5px 4px 0 rgba(60,100,150,0.07);
+    padding: 38px 36px 30px 36px;
+  }
+  h1 {
+    color: #26497d;
+    margin-bottom: 24px;
+    font-weight: 700;
+    font-size: 2rem;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+  .error-block {
+    background: #ffeaea;
+    color: #b90000;
+    padding: 12px 14px;
+    border-radius: 7px;
+    margin-bottom: 18px;
+    border: 1px solid #e6b1b1;
+    text-align: center;
+    font-size: 1.08em;
+  }
+  .field-error {
+    color: #b90000;
+    font-size: 0.98em;
+    margin-top: 4px;
+    margin-bottom: 2px;
+  }
+  form label {
+    font-weight: 600;
+    color: #365072;
+    margin-top: 22px;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 1.03em;
+  }
+  .radio-row {
+    display: flex;
+    gap: 2em;
+    margin-bottom: 12px;
+    align-items: center;
+  }
+  .radio-row label {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+  input[type="radio"] {
+    accent-color: #4682b4;
+    margin-right: 7px;
+    vertical-align: middle;
+  }
+  input[type="text"], input[type="number"], select, input[type="file"] {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1.2px solid #c5d8ec;
+    border-radius: 6px;
+    font-size: 1em;
+    background: #f8fbff;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border 0.2s;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, select:focus, input[type="file"]:focus {
+    border: 1.2px solid #4682b4;
+    background: #f1f9ff;
+  }
+  button {
+    width: 100%;
+    background: linear-gradient(90deg, #4682b4 70%, #62b5ff 100%);
+    color: #fff;
+    border: none;
+    padding: 13px 0;
+    margin-top: 22px;
+    border-radius: 8px;
+    font-size: 1.13em;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    box-shadow: 0 2px 12px 0 rgba(70,130,180,0.11);
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  button:hover, button:focus {
+    background: linear-gradient(90deg, #325d7e 70%, #4b99d4 100%);
+    box-shadow: 0 4px 16px 0 rgba(70,130,180,0.19);
+  }
+  .note {
+    color: #7084a6;
+    font-size: 0.99em;
+    margin-top: 0;
+    margin-bottom: 19px;
+    text-align: left;
+  }
+  .form-group {
+    margin-bottom: 10px;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 16px 4px 13px 4px; }
+    h1 { font-size: 1.15rem; }
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Успешная регистрация</title>
+  <style>
+    body { background: #f0f8ff; font-family: Arial, sans-serif; }
+    .box {
+      max-width: 410px;
+      margin: 60px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 18px 0 #a6bcd4;
+      padding: 36px 30px;
+      text-align: center;
+    }
+    h1 { color: #3877bc; margin-bottom: 18px; }
+    p { color: #274d73; font-size: 1.13em; margin-top: 14px;}
+    a {
+      display: inline-block;
+      margin-top: 26px;
+      color: #fff;
+      background: #4682b4;
+      padding: 11px 28px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05em;
+      transition: background 0.2s;
+    }
+    a:hover { background: #315d8a; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Регистрация завершена!</h1>
+    <p>Ваш аккаунт успешно создан.<br>Теперь вы можете войти в систему.</p>
+    <a href="{% url 'login' %}">Войти</a>
+  </div>
+</body>
+</html>
